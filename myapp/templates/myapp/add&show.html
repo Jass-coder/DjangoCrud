@@ -1,0 +1,50 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info">Add New Students</h4>
+<form action="" method="POST" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="stuid" id="stuid" />
+    {{form.as_p}}
+    <input type="submit" id="btnsave" class="btn btn-success" value="Add">
+</form>
+    </div>
+
+    <div class="col-sm-8">
+            <h4 class="text-center alert alert-info">Show Student Data</h4>
+            {% if stud %}
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% for col in stud %}
+                  <tr>
+                    <th scope="row">{{col.id}}</th>
+                    <td>{{col.name}}</td>
+                    <td>{{col.email}}</td>
+                    <td>{{col.password}}</td>
+                    <td>
+                        <input type="button" data-sid="{{col.id}}" class="btn btn-warning btn-sm btn-edit" value="Edit"/>
+                        <input type="button" data-sid="{{col.id}}" class="btn btn-danger btn-sm btn-del" value="Delete"/>                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+                <h4  class="text-center alert alert-info">No Records</h4>
+            {% endif%}
+    </div>
+</div>
+    <script src="{% static 'myapp/js/jquery.js' %}"></script>
+    <script src="{% static 'myapp/js/bootstrap.js' %}"></script>
+    <script src="{% static 'myapp/js/popper.js' %}"></script>
+{% include "myapp/ajax.html" %}
+{% endblock content %}
